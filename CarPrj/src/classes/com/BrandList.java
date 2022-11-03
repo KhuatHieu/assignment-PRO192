@@ -25,7 +25,7 @@ public class BrandList extends ArrayList<Brand> {
     public BrandList() {
     }
 
-    boolean loadFromFile(String fileBrands) {
+    public boolean loadFromFile(String fileBrands) {
         boolean result = false;
         try {
             File f = new File(fileBrands);
