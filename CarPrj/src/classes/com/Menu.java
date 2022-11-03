@@ -7,6 +7,9 @@ public class Menu<E> {
 
     public Scanner scanner = new Scanner(System.in);
 
+    public Menu() {
+    }
+    
     public int int_getChoice(ArrayList<E> options) {
         for (int i = 0; i < options.size(); i++) {
             System.out.println(i + " " + options);
