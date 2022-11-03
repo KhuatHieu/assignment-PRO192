@@ -13,13 +13,16 @@ public class Menu<E> {
     public static int getInt() {
         Scanner scanner = new Scanner(System.in);
         int num;
-      
-        while (!scanner.hasNextInt()) {
-            String input = scanner.next();
-            System.out.println(input + " is not a number. Please retype");
-        }
-        num = scanner.nextInt();
-
+        do {
+            while (!scanner.hasNextInt()) {
+                String input = scanner.next();
+                System.out.println(input + " is not a number. Please retype");
+            }
+            num = scanner.nextInt();
+            if (num < 0)
+                System.out.println(num + " is smaller than 0. Please enter a number greater than 0");
+        } while (num < 0);
+        
         return num;
     }
     
