@@ -28,13 +28,13 @@ import java.util.logging.Logger;
  * @author user
  */
 public class CarList extends ArrayList<Car> {
-    
+
     BrandList brandlist;
-    
+
     public CarList(BrandList brandlist) {
         this.brandlist = brandlist;
     }
-    
+
     public boolean loadFromFile(String fileCars) {
         boolean result = false;
         try {
@@ -73,17 +73,17 @@ public class CarList extends ArrayList<Car> {
             File f = new File(fileCars);
             FileWriter fw = new FileWriter(f);
             PrintWriter pw = new PrintWriter(fw);
-            
+
             for (Car c : this) {
                 pw.println(c);
             }
-            pw.close();            
+            pw.close();
             fw.close();
-            
+
         } catch (Exception e) {
-            
+
             return result;
-            
+
         }
         return result;
     }
@@ -124,10 +124,6 @@ public class CarList extends ArrayList<Car> {
         return index;
     }
 
-    
-
-    
-
     public boolean removeCar() {
         boolean yup = true;
         Scanner sc = new Scanner(System.in);
@@ -143,7 +139,7 @@ public class CarList extends ArrayList<Car> {
         return yup;
     }
 
-    public boolean updateCar() {
+    public boolean updateCar() { // can fix them
         boolean yup = true;
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter ID of car wants to update: ");
@@ -154,7 +150,6 @@ public class CarList extends ArrayList<Car> {
             yup = false;
         } else {
 
-            // menu ...
         }
         return yup;
     }
@@ -163,15 +158,61 @@ public class CarList extends ArrayList<Car> {
         Collections.sort(this, new Comparator<Car>() {
             @Override
             public int compare(Car o1, Car o2) {
-                if(!o1.brand.getBrandName().equals(o2.brand.getBrandName())) {
+                if (!o1.brand.getBrandName().equals(o2.brand.getBrandName())) {
                     return o1.brand.getBrandName().compareTo(o2.brand.getBrandName());
-                }else {
+                } else {
                     return o1.brand.getBrandID().compareTo(o2.brand.getBrandID());
                 }
             }
-        });for (int i = 0; i < this.size(); i++) {
-            Car c =this.get(i);
+        });
+        for (int i = 0; i < this.size(); i++) {
+            Car c = this.get(i);
             System.out.println(c.screnString());
         }
+    }
+
+    public void addCar() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("List of the brand: ");
+        for (int i = 0; i < this.brandlist.size(); i++) {
+            System.out.println(this.brandlist.get(i));
+        }
+        System.out.print("Enter new carID: ");
+        String carID = sc.nextLine();
+        for (int i = 0; i < this.size(); i++) {
+            while (this.get(i).getCarID().equals(carID)) {
+                System.out.print("carID must not be duplicated. Enter again: ");
+                carID = sc.nextLine();
+            }
+        }
+        Menu menu = new Menu();
+        Brand b = (Brand) menu.ref_getChoice(brandlist);
+        System.out.print("Enter color: ");
+        String color = sc.nextLine();
+        while (color.contains(" ")) {
+            System.out.print("color must not be has space. Please enter and again: ");
+            color = sc.nextLine();
+        }
+        String frameID = sc.nextLine();
+        for (int i = 0; i < this.brandlist.size(); i++) {
+            while (!frameID.startsWith("F") && this.brandlist.get(i).equals(frameID)) {
+                System.out.print("frameID must be start with 'F' and must not have duplicated. Enter agian: ");
+                frameID = sc.nextLine();
+            }
+        }
+        String engineID = sc.nextLine();
+        for (int i = 0; i < this.size(); i++) {
+            while (!frameID.startsWith("F") && this.brandlist.get(i).equals(frameID)) {
+                System.out.print("frameID must be start with 'F' and must not have duplicated. Enter agian: ");
+                engineID = sc.nextLine();
+            }
+        }
+        Car c = new Car(carID, b, color, frameID, engineID);
+        this.add(c);
+    }
+
+    public void printtBasedBrandName() {
+        System.out.println("Brand name of list: ");
     }
 }
