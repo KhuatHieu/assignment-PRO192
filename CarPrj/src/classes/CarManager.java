@@ -44,6 +44,7 @@ public class CarManager {
         int choice;
         Menu menu = new Menu();
         do {
+            System.out.println("==================================");
             choice = menu.int_getChoice(options);
             switch (choice) {
                 case 0:
