@@ -87,16 +87,12 @@ public class BrandList extends ArrayList<Brand> {
         return index;
     }
 
-    public Brand getUserChoice() {
+    public Brand getUserChoice() {  
         Menu mnu = new Menu();
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter your choice: ");
-        int choice = sc.nextInt();
-        //    return (Brand)mnu.ref_getChoice(choice);   chua co o ham menu
-        return null; //fixxing
+        return (Brand)mnu.ref_getChoice(this);   
     }
 
-    public void addBrand() {
+    public void addBrand() {  // can fix them
         BrandList ListBrand = new BrandList();
         Brand b = new Brand();
         Scanner sc = new Scanner(System.in);
@@ -118,8 +114,30 @@ public class BrandList extends ArrayList<Brand> {
         if(Pos < 0 ) {
             System.out.println("Not found!");
         }else {
-            
-            // 
+            Scanner pc = new Scanner(System.in);
+            System.out.println("Found and start changing: ");
+            for (int i = 0; i < this.size(); i++) {
+                
+                System.out.print("\nEnter new BrandName: ");
+                this.get(Pos).setBrandName(sc.nextLine());
+                while(this.get(Pos).getBrandName().contains(" ")) {
+                    System.out.println("Brand name must not be has the space.");
+                    this.get(Pos).setBrandName(pc.nextLine());
+                }
+                System.out.print("\nEnter new soundBrand: ");
+                this.get(Pos).setSoundBrand(sc.nextLine());
+                while(this.get(Pos).getSoundBrand().contains(" ")) {
+                    System.out.println("SoundBrand must");
+                }
+                
+                System.out.print("\nEnter new price: ");
+                this.get(Pos).setPrice(pc.nextDouble());
+                while (this.get(Pos).getPrice() < 0) {
+                    System.out.print("Error and please enter again price must be >= 0: ");
+                    this.get(Pos).setPrice(pc.nextDouble());
+                }
+            }
+                  
             
             
         }
