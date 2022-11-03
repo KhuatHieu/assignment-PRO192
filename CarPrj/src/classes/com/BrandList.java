@@ -1,5 +1,128 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package classes.com;
 
-public class BrandList {
-    String brand;
+import classes.com.Menu;
+import classes.com.Brand;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+/**
+ *
+ * @author user
+ */
+public class BrandList extends ArrayList<Brand> {
+
+    public BrandList() {
+    }
+
+    boolean loadFromFile(String fileBrands) {
+        boolean result = false;
+        try {
+            File f = new File(fileBrands);
+            FileReader fr = new FileReader(f);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                StringTokenizer stk = new StringTokenizer(line, ",");
+                String brandid = stk.nextElement().toString();
+                String brandName = stk.nextElement().toString();
+                String soundBrand = stk.nextElement().toString();
+                double price = Double.parseDouble(stk.nextToken());
+                Brand tmp = new Brand(brandid, brandName, soundBrand, price);
+                this.add(tmp);
+            }
+            System.out.println("End of file. ");
+            br.close();
+            fr.close();
+            result = true;
+            System.out.println("Read data from file " + fileBrands + " is completerd. ");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = false;
+        }
+        return result;
+    }
+
+    public boolean saveToFile(String fileBrands) {
+        boolean result = false;
+        try {
+            File f = new File(fileBrands);
+            FileWriter fw = new FileWriter(f);
+            PrintWriter pw = new PrintWriter(fw);
+            for (Brand c : this) {
+                pw.println(c);
+            }
+            System.out.println("Save to file " + fileBrands + " is success. ");
+            pw.close();
+            fw.close();
+
+        } catch (Exception e) {
+
+            return result;
+
+        }
+        return result;
+    }
+
+    public int searchID(String bID) {
+        int index = -1;
+        for (int i = 0; i <this.size();  i++) {
+            if (this.get(i).getBrandID() == bID) {
+                index = i;
+        }else {
+                index = index;
+            }
+        }
+        return index;
+    }
+
+    public Brand getUserChoice() {
+        Menu mnu = new Menu();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter your choice: ");
+        int choice = sc.nextInt();
+        //    return (Brand)mnu.ref_getChoice(choice);   chua co o ham menu
+        return null; //fixxing
+    }
+
+    public void addBrand() {
+        BrandList ListBrand = new BrandList();
+        Brand b = new Brand();
+        Scanner sc = new Scanner(System.in);
+        while (b.getPrice() < 0) {
+            System.out.println("Please enter again price: ");
+            ListBrand.add(new Brand(sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextDouble()));
+
+        }
+    }public void listBrands() {
+            for (Brand b : this) {
+                System.out.println(b);
+            }
+    }public void updateBrand() {
+        String brandID;
+        Scanner sc= new Scanner(System.in);
+        System.out.print("BrandID want to find:");
+        brandID = sc.nextLine();
+        int Pos = searchID(brandID);
+        if(Pos < 0 ) {
+            System.out.println("Not found!");
+        }else {
+            
+            // 
+            
+            
+        }
+    }
+
 }
