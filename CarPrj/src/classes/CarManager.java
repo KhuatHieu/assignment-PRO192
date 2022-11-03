@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import java.io.IOException;
-
 public class CarManager {
 
     public static String projectPath = Paths.get("").toAbsolutePath().toString();
@@ -40,7 +38,6 @@ public class CarManager {
         String brandsPath = srcPath + "\\Brands.txt";
         String carsPath = srcPath + "\\Cars.txt";
 
-        boolean choosing = true;
         int choice;
         Menu menu = new Menu();
         do {
@@ -89,6 +86,5 @@ public class CarManager {
                     break;
             }
         } while (choice >= 0 && choice < options.size());
-
     }
 }

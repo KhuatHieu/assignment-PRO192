@@ -10,6 +10,24 @@ public class Menu<E> {
     public Menu() {
     }
 
+    public static int getInt() {
+        Scanner scanner = new Scanner(System.in);
+        int num;
+      
+        while (!scanner.hasNextInt()) {
+            String input = scanner.next();
+            System.out.println(input + " is not a number. Please retype");
+        }
+        num = scanner.nextInt();
+
+        return num;
+    }
+    
+    public static int getInt(String message) {
+        System.out.println(message);
+        return getInt();
+    }
+    
     public int int_getChoice(ArrayList<E> options) {
         for (int i = 0; i < options.size(); i++) {
             System.out.println(i + " " + options.get(i));
