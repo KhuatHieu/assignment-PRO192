@@ -2,13 +2,7 @@ package classes;
 
 import classes.com.*;
 
-import classes.com.BrandList;
-import classes.com.CarList;
-import java.util.List;
 import java.util.ArrayList;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -16,14 +10,15 @@ import java.io.IOException;
 
 public class CarManager {
 
-    public static Path projectPath = Paths.get("");
-    public static String workingPath = projectPath.toAbsolutePath().toString() + "\\src";
+    public static String projectPath = Paths.get("").toAbsolutePath().toString();
+    public static String srcPath = projectPath + "\\src";
 
     public static ArrayList<String> options = new ArrayList<>();
 
     public static Scanner scanner = new Scanner(System.in);
 
     public static void addOptions() {
+        options.add("Exit");
         options.add("List all brands");
         options.add("Add a new brand");
         options.add("Search a brand by ID");
@@ -37,18 +32,22 @@ public class CarManager {
         options.add("Save cars to file");
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         addOptions();
         BrandList brandList = new BrandList();
         CarList carList = new CarList(brandList);
 
-        String brandsPath = workingPath + "\\Brands.txt";
-        String carsPath = workingPath + "\\Cars.txt";
+        String brandsPath = srcPath + "\\Brands.txt";
+        String carsPath = srcPath + "\\Cars.txt";
 
+        boolean choosing = true;
+        int choice;
         Menu menu = new Menu();
         do {
-            int choice = menu.int_getChoice(options);
+            choice = menu.int_getChoice(options);
             switch (choice) {
+                case 0:
+                    return;
                 case 1:
                     brandList.listBrands();
                     break;
@@ -70,16 +69,25 @@ public class CarManager {
                     carList.listCars();
                     break;
                 case 7:
-                    
+                    carList.printtBasedBrandName();
                     break;
                 case 8:
-                    carList.add(e);
+                    carList.addCar();
                     break;
                 case 9:
-                    
+                    carList.removeCar();
+                    break;
+                case 10:
+                    carList.updateCar();
+                    break;
+                case 11:
+                    carList.saveToFile(carsPath);
+                    break;
+                default:
+                    System.out.println("Enter option again");
+                    break;
             }
-        }
-    
-    
+        } while (choice >= 0 && choice < options.size());
+
     }
 }
