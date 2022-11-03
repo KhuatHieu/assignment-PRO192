@@ -77,19 +77,19 @@ public class BrandList extends ArrayList<Brand> {
 
     public int searchID(String bID) {
         int index = -1;
-        for (int i = 0; i <this.size();  i++) {
-            if (this.get(i).getBrandID() == bID) {
+        for (int i = 0; i < this.size(); i++) {
+            if (this.get(i).getBrandID().equals(bID)) {
                 index = i;
-        }else {
+            } else {
                 index = index;
             }
         }
         return index;
     }
 
-    public Brand getUserChoice() {  
+    public Brand getUserChoice() {
         Menu mnu = new Menu();
-        return (Brand)mnu.ref_getChoice(this);   
+        return (Brand) mnu.ref_getChoice(this);
     }
 
     public void addBrand() {  // can fix them
@@ -101,35 +101,39 @@ public class BrandList extends ArrayList<Brand> {
             ListBrand.add(new Brand(sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextDouble()));
 
         }
-    }public void listBrands() {
-            for (Brand b : this) {
-                System.out.println(b);
-            }
-    }public void updateBrand() {
+    }
+
+    public void listBrands() {
+        for (Brand b : this) {
+            System.out.println(b);
+        }
+    }
+
+    public void updateBrand() {
         String brandID;
-        Scanner sc= new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         System.out.print("BrandID want to find:");
         brandID = sc.nextLine();
         int Pos = searchID(brandID);
-        if(Pos < 0 ) {
+        if (Pos < 0) {
             System.out.println("Not found!");
-        }else {
+        } else {
             Scanner pc = new Scanner(System.in);
             System.out.println("Found and start changing: ");
             for (int i = 0; i < this.size(); i++) {
-                
+
                 System.out.print("\nEnter new BrandName: ");
                 this.get(Pos).setBrandName(sc.nextLine());
-                while(this.get(Pos).getBrandName().contains(" ")) {
+                while (this.get(Pos).getBrandName().contains(" ")) {
                     System.out.println("Brand name must not be has the space.");
                     this.get(Pos).setBrandName(pc.nextLine());
                 }
                 System.out.print("\nEnter new soundBrand: ");
                 this.get(Pos).setSoundBrand(sc.nextLine());
-                while(this.get(Pos).getSoundBrand().contains(" ")) {
+                while (this.get(Pos).getSoundBrand().contains(" ")) {
                     System.out.println("SoundBrand must");
                 }
-                
+
                 System.out.print("\nEnter new price: ");
                 this.get(Pos).setPrice(pc.nextDouble());
                 while (this.get(Pos).getPrice() < 0) {
@@ -137,9 +141,7 @@ public class BrandList extends ArrayList<Brand> {
                     this.get(Pos).setPrice(pc.nextDouble());
                 }
             }
-                  
-            
-            
+
         }
     }
 
