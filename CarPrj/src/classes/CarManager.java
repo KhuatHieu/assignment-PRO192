@@ -61,7 +61,10 @@ public class CarManager {
                     brandList.updateBrand();
                     break;
                 case 5:
-                    brandList.saveToFile(brandsPath);
+                    if (brandList.saveToFile(brandsPath))
+                        System.out.println("Saved!");
+                    else
+                        System.out.println("Cannot save to file!");
                     break;
                 case 6:
                     carList.listCars();

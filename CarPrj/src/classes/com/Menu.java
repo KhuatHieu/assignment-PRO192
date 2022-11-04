@@ -31,7 +31,7 @@ public class Menu<E> {
     }
 
     public int getInt(String message) {
-        System.out.println(message);
+        System.out.print(message);
         return getInt();
     }
 
@@ -52,7 +52,7 @@ public class Menu<E> {
     }
 
     public double getDouble(String message) {
-        System.out.println(message);
+        System.out.print(message);
         return getDouble();
     }
 
@@ -63,7 +63,7 @@ public class Menu<E> {
     }
 
     public String getString(String message) {
-        System.out.println(message);
+        System.out.print(message);
         return getString();
     }
 
@@ -80,7 +80,7 @@ public class Menu<E> {
     }
 
     public String getStringWoSpace(String message) {
-        System.out.println(message);
+        System.out.print(message);
         return getStringWoSpace();
     }
 

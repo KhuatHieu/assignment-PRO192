@@ -66,7 +66,7 @@ public class BrandList extends ArrayList<Brand> {
     }
 
     public void addBrand() {
-        String id = menu.getString("Enter brand ID: ");
+        String id = menu.getStringWoSpace("Enter brand ID: ");
         String name = menu.getString("Enter brand name: ");
         String sound = menu.getString("Enter sound brand: ");
         double price = menu.getDouble("Enter price: ");
@@ -80,13 +80,13 @@ public class BrandList extends ArrayList<Brand> {
     }
 
     public void updateBrand() {
-        String brandId = menu.getString("Enter brand ID you want to update: ");
+        String brandId = menu.getStringWoSpace("Enter brand ID you want to update: ");
         int pos = searchID(brandId);
         if (pos < 0)
             System.out.println("Not found");
         else {
-            this.get(pos).setBrandName(menu.getStringWoSpace("Enter new brand name: "));
-            this.get(pos).setSoundBrand(menu.getStringWoSpace("Enter new sound brand: "));
+            this.get(pos).setBrandName(menu.getString("Enter new brand name: "));
+            this.get(pos).setSoundBrand(menu.getString("Enter new sound brand: "));
             this.get(pos).setPrice(menu.getDouble("Enter new price: "));
         }
     }
