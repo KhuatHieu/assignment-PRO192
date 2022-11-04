@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -21,6 +22,7 @@ import java.util.StringTokenizer;
  * @author user
  */
 public class BrandList extends ArrayList<Brand> {
+    
 
     public BrandList() {
     }
@@ -92,15 +94,21 @@ public class BrandList extends ArrayList<Brand> {
         return (Brand) mnu.ref_getChoice(this);
     }
 
-    public void addBrand() {  // can fix them
-        BrandList ListBrand = new BrandList();
+    public void addBrand() {  
+        
         Brand b = new Brand();
         Scanner sc = new Scanner(System.in);
+        String id = sc.nextLine();
+        String name = sc.nextLine();
+        String sound =sc.nextLine();
+        double price = Double.parseDouble(sc.nextLine());
         while (b.getPrice() < 0) {
             System.out.println("Please enter again price: ");
-            ListBrand.add(new Brand(sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextDouble()));
-
+            price = Double.parseDouble(sc.nextLine());
         }
+        b = new Brand(id, name, sound, price);
+        this.add(b);
+        
     }
 
     public void listBrands() {
