@@ -37,7 +37,10 @@ public class CarManager {
 
         String brandsPath = srcPath + "\\Brands.txt";
         String carsPath = srcPath + "\\Cars.txt";
-
+        
+        brandList.loadFromFile(brandsPath);
+        carList.loadFromFile(carsPath);
+        
         int choice;
         Menu menu = new Menu();
         do {
@@ -53,18 +56,17 @@ public class CarManager {
                     brandList.addBrand();
                     break;
                 case 3:
-                    System.out.println("Enter brand ID to search: ");
-                    String bID = scanner.nextLine();
-                    brandList.searchID(bID);
+                    brandList.searchID(menu.getStringWoSpace("Enter brand ID to search: "));
                     break;
                 case 4:
                     brandList.updateBrand();
                     break;
                 case 5:
-                    if (brandList.saveToFile(brandsPath))
-                        System.out.println("Saved!");
-                    else
-                        System.out.println("Cannot save to file!");
+                    if (brandList.saveToFile(brandsPath)) {
+                        System.out.println("Saved successfully!");
+                    } else {
+                        System.out.println("Save failed!");
+                    }
                     break;
                 case 6:
                     carList.listCars();
@@ -76,13 +78,25 @@ public class CarManager {
                     carList.addCar();
                     break;
                 case 9:
-                    carList.removeCar();
+                    if (carList.removeCar()) {
+                        System.out.println("Removed successfully!");
+                    } else {
+                        System.out.println("Remove failed!");
+                    }
                     break;
                 case 10:
-                    carList.updateCar();
+                    if (carList.updateCar()) {
+                        System.out.println("Updated successfully!");
+                    } else {
+                        System.out.println("Update failed!");
+                    }
                     break;
                 case 11:
-                    carList.saveToFile(carsPath);
+                    if (carList.saveToFile(carsPath)) {
+                        System.out.println("Saved successfully!");
+                    } else {
+                        System.out.println("Save failed!");
+                    }
                     break;
                 default:
                     System.out.println("Enter option again");
