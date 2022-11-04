@@ -22,7 +22,7 @@ public class BrandList extends ArrayList<Brand> {
             String line;
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
-                String data[] = line.split("[,:]+");
+                String data[] = line.split("[,: ]+");
                 String brandId = data[0];
                 String brandName = data[1];
                 String soundBrand = data[2];
@@ -30,7 +30,7 @@ public class BrandList extends ArrayList<Brand> {
                 this.add(new Brand(brandId, brandName, soundBrand, price));
             }
             br.close();
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException e) {
             return false;
         }
         return true;
@@ -67,15 +67,19 @@ public class BrandList extends ArrayList<Brand> {
     }
 
     public void addBrand() {
-        String id = menu.getStringWoSpace("Enter brand ID: ");
-        if (searchID(id) == -1) {
-            String name = menu.getString("Enter brand name: ");
-            String sound = menu.getString("Enter sound brand: ");
-            double price = menu.getDouble("Enter price: ");
-            this.add(new Brand(id, name, sound, price));
-        } else {
-            System.out.println(id + " existed in database! Please enter another");
-        }
+        boolean adding = true;
+        do {
+            String id = menu.getStringWoSpace("Enter brand ID: ");
+            if (searchID(id) == -1) {
+                String name = menu.getString("Enter brand name: ");
+                String sound = menu.getString("Enter sound brand: ");
+                double price = menu.getDouble("Enter price: ");
+                this.add(new Brand(id, name, sound, price));
+                adding = (menu.getString("Add new brand completed!\nDo you want to add another brand? [y/n]: ").equals("y"));
+            } else {
+                System.out.println(id + " already existed in database! Please enter another brand ID");
+            }
+        } while (adding);
     }
 
     public void listBrands() {

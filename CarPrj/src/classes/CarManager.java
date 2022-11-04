@@ -38,8 +38,19 @@ public class CarManager {
         String brandsPath = srcPath + "\\Brands.txt";
         String carsPath = srcPath + "\\Cars.txt";
         
-        brandList.loadFromFile(brandsPath);
-        carList.loadFromFile(carsPath);
+        if (brandList.loadFromFile(brandsPath))
+            System.out.println("Loaded brands database successfully");
+        else {
+            System.out.println("Error load brands database! Exiting");
+            System.exit(0);
+        }
+        
+        if (carList.loadFromFile(carsPath))
+            System.out.println("Loaded cars database successfully");
+        else {
+            System.out.println("Error load cars database! Exiting");
+            System.exit(0);
+        }
         
         int choice;
         Menu menu = new Menu();
@@ -72,7 +83,7 @@ public class CarManager {
                     carList.listCars();
                     break;
                 case 7:
-                    carList.printtBasedBrandName();
+                    carList.printBasedBrandName();
                     break;
                 case 8:
                     carList.addCar();

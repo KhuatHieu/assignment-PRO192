@@ -2,10 +2,9 @@ package classes.com;
 
 public class Car implements Comparable<Car> {
 
-    private String carID;
-    Brand brand;
-    private String color;
-    private String frameID, engineID;
+    public String carID;
+    public Brand brand;
+    public String color, frameID, engineID;
 
     public Car() {
     }
@@ -78,9 +77,7 @@ public class Car implements Comparable<Car> {
     }
 
     public String toString(String brandID) {
-        brandID = brand.getBrandID();
-
-        return carID + ", " + brandID + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
+        return carID + ", " + brand.getBrandID() + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
     }
 
 }
