@@ -1,19 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package classes.com;
 
-import classes.com.Brand;
+public class Car implements Comparable<Car> {
 
-
-
-/**
- *
- * @author user
- */
-public class Car implements Comparable<Car>{
     private String carID;
     Brand brand;
     private String color;
@@ -72,29 +60,27 @@ public class Car implements Comparable<Car>{
 
     @Override
     public String toString() {
-        return  carID + ", " + brand + ", " + color + ", " + frameID + ", " + engineID;
+        return carID + ", " + brand + ", " + color + ", " + frameID + ", " + engineID;
     }
-    
 
     @Override
     public int compareTo(Car o) {
-       int d = this.brand.getBrandName().compareTo(o.brand.getBrandName());
-       if(d != 0) {
-           return d;
-       }else {
-           return this.carID.compareTo(o.carID);
-       }
+        int d = this.brand.getBrandName().compareTo(o.brand.getBrandName());
+        if (d != 0) {
+            return d;
+        } else {
+            return this.carID.compareTo(o.carID);
+        }
     }
+
     public String screnString() {
         return brand.toString() + "\n" + getCarID() + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
     }
-    public String toString(String brandID) {
-           brandID = brand.getBrandID();
 
-        return carID + ", " + brandID+ ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
+    public String toString(String brandID) {
+        brandID = brand.getBrandID();
+
+        return carID + ", " + brandID + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
     }
 
-    
-    
-    
 }
