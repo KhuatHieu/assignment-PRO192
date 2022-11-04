@@ -139,7 +139,7 @@ public class CarList extends ArrayList<Car> {
         return yup;
     }
 
-    public boolean updateCar() { // can fix them
+    public boolean updateCar() { // can fix them 
         boolean yup = true;
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter ID of car wants to update: ");
@@ -149,7 +149,34 @@ public class CarList extends ArrayList<Car> {
             System.out.print("Not found!");
             yup = false;
         } else {
+            Menu menu = new Menu();
+            Brand b = (Brand) menu.ref_getChoice(brandlist);
+            Scanner pc = new Scanner(System.in);
+            System.out.println("Found and start changing: ");
+            for (int i = 0; i < this.size(); i++) {
 
+                System.out.print("\nEnter new Color: ");
+                this.get(pos).setColor(sc.nextLine());
+                while (this.get(pos).getColor().contains(" ")) {
+                    System.out.println("Color must not be has the space. Again: ");
+                    this.get(pos).setColor(pc.nextLine());
+                }
+                System.out.print("\nEnter new frameID: ");
+                this.get(pos).setFrameID(sc.nextLine());
+                String nframID = this.get(pos).getFrameID();
+                while (!nframID.startsWith("F") && this.get(i).equals(nframID)) {
+                System.out.print("frameID must be start with 'F' and must not have duplicated. Enter agian: ");
+                this.get(pos).setFrameID(sc.nextLine());
+            }
+
+                System.out.print("\nEnter new engineID: ");
+                this.get(pos).setEngineID(sc.nextLine());
+                String tmp =this.get(pos).getEngineID();
+                while (!tmp.startsWith("F") && this.get(i).equals(tmp)) {
+                System.out.print("engineIDID must be start with 'F' and must not have duplicated. Enter agian: ");
+                this.get(pos).setEngineID(sc.nextLine());
+            }
+            }
         }
         return yup;
     }
@@ -196,14 +223,14 @@ public class CarList extends ArrayList<Car> {
         }
         String frameID = sc.nextLine();
         for (int i = 0; i < this.brandlist.size(); i++) {
-            while (!frameID.startsWith("F") && this.brandlist.get(i).equals(frameID)) {
+            while (frameID.startsWith("F") && !this.brandlist.get(i).equals(frameID)) {
                 System.out.print("frameID must be start with 'F' and must not have duplicated. Enter agian: ");
                 frameID = sc.nextLine();
             }
         }
         String engineID = sc.nextLine();
         for (int i = 0; i < this.size(); i++) {
-            while (!frameID.startsWith("F") && this.brandlist.get(i).equals(frameID)) {
+            while (!engineID.startsWith("F") && this.brandlist.get(i).equals(engineID)) {
                 System.out.print("frameID must be start with 'F' and must not have duplicated. Enter agian: ");
                 engineID = sc.nextLine();
             }
