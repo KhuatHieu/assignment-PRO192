@@ -52,6 +52,31 @@ public class Menu<E> {
         return getDouble();
     }
 
+    public String getString() {
+        String out = scanner.nextLine();
+        return out;
+    }
+    
+    public String getString(String message) {
+        System.out.println(message);
+        return getString();
+    }
+    
+    public String getStringWoSpace() {
+        String out;
+        do {
+            out = scanner.nextLine();
+            if (out.contains(" "))
+                System.out.println("String must not contain space. Please retype");
+        } while (out.contains(" "));
+        return out;
+    }
+    
+    public String getStringWoSpace(String message) {
+        System.out.println(message);
+        return getStringWoSpace();
+    }
+    
     public int int_getChoice(ArrayList<E> options) {
         for (int i = 0; i < options.size(); i++) {
             System.out.println(i + " " + options.get(i));
