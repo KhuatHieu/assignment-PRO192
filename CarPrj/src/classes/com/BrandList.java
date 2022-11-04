@@ -40,8 +40,9 @@ public class BrandList extends ArrayList<Brand> {
         try {
             FileWriter fw = new FileWriter(fileBrands);
             BufferedWriter bw = new BufferedWriter(fw);
-            for (Brand brand : this)
+            for (Brand brand : this) {
                 bw.write(brand.toString() + "\n");
+            }
             bw.close();
         } catch (IOException e) {
             return false;
@@ -67,10 +68,14 @@ public class BrandList extends ArrayList<Brand> {
 
     public void addBrand() {
         String id = menu.getStringWoSpace("Enter brand ID: ");
-        String name = menu.getString("Enter brand name: ");
-        String sound = menu.getString("Enter sound brand: ");
-        double price = menu.getDouble("Enter price: ");
-        this.add(new Brand(id, name, sound, price));
+        if (searchID(id) == -1) {
+            String name = menu.getString("Enter brand name: ");
+            String sound = menu.getString("Enter sound brand: ");
+            double price = menu.getDouble("Enter price: ");
+            this.add(new Brand(id, name, sound, price));
+        } else {
+            System.out.println(id + " existed in database! Please enter another");
+        }
     }
 
     public void listBrands() {
@@ -82,9 +87,9 @@ public class BrandList extends ArrayList<Brand> {
     public void updateBrand() {
         String brandId = menu.getStringWoSpace("Enter brand ID you want to update: ");
         int pos = searchID(brandId);
-        if (pos < 0)
+        if (pos == -1) {
             System.out.println("Not found");
-        else {
+        } else {
             this.get(pos).setBrandName(menu.getString("Enter new brand name: "));
             this.get(pos).setSoundBrand(menu.getString("Enter new sound brand: "));
             this.get(pos).setPrice(menu.getDouble("Enter new price: "));
