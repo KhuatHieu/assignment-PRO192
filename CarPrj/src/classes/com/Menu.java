@@ -11,7 +11,6 @@ public class Menu<E> {
     }
 
     public int getInt() {
-        Scanner scanner = new Scanner(System.in);
         int num;
         do {
             while (!scanner.hasNextInt()) {
@@ -33,7 +32,6 @@ public class Menu<E> {
     }
 
     public double getDouble() {
-        Scanner scanner = new Scanner(System.in);
         double num;
         do {
             while (!scanner.hasNextDouble()) {
