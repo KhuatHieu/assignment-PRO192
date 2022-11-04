@@ -34,6 +34,7 @@ public class CarList extends ArrayList<Car> {
     public CarList(BrandList brandlist) {
         this.brandlist = brandlist;
     }
+    public Menu menu = new Menu();
 
     public boolean loadFromFile(String fileCars) {
         boolean result = false;
@@ -139,43 +140,31 @@ public class CarList extends ArrayList<Car> {
         return yup;
     }
 
-    public boolean updateCar() { // can fix them 
+    public boolean updateCar() {  
         boolean yup = true;
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter ID of car wants to update: ");
-        String updateID = sc.nextLine();
+        String updateID = menu.getStringWoSpace("Enter CarID: ");
         int pos = searchID(updateID);
         if (pos < 0) {
             System.out.print("Not found!");
             yup = false;
-        } else {
-            Menu menu = new Menu();
-            Brand b = (Brand) menu.ref_getChoice(brandlist);
-            Scanner pc = new Scanner(System.in);
+        } else {            
+            Brand b = (Brand) menu.ref_getChoice(brandlist);            
             System.out.println("Found and start changing: ");
+            this.get(pos).setColor(menu.getString("Enter Color: "));
+            this.get(pos).setFrameID(menu.getString("Enter frameID: "));
             for (int i = 0; i < this.size(); i++) {
-
-                System.out.print("\nEnter new Color: ");
-                this.get(pos).setColor(sc.nextLine());
-                while (this.get(pos).getColor().contains(" ")) {
-                    System.out.println("Color must not be has the space. Again: ");
-                    this.get(pos).setColor(pc.nextLine());
+                String tmp = this.get(i).getFrameID();
+                while(tmp.equals(this.get(pos).getFrameID()) && !tmp.startsWith("F")) {
+                    System.out.println("frameID was been duplicated or need to start with F.");
+                    this.get(pos).setFrameID("Enter frameID: ");
                 }
-                System.out.print("\nEnter new frameID: ");
-                this.get(pos).setFrameID(sc.nextLine());
-                String nframID = this.get(pos).getFrameID();
-                while (!nframID.startsWith("F") && this.get(i).equals(nframID)) {
-                System.out.print("frameID must be start with 'F' and must not have duplicated. Enter agian: ");
-                this.get(pos).setFrameID(sc.nextLine());
-            }
-
-                System.out.print("\nEnter new engineID: ");
-                this.get(pos).setEngineID(sc.nextLine());
-                String tmp =this.get(pos).getEngineID();
-                while (!tmp.startsWith("F") && this.get(i).equals(tmp)) {
-                System.out.print("engineIDID must be start with 'F' and must not have duplicated. Enter agian: ");
-                this.get(pos).setEngineID(sc.nextLine());
-            }
+            }this.get(pos).setEngineID(menu.getString("Enter EngineID: "));
+            for (int i = 0; i < this.size(); i++) {
+                String tmp = this.get(i).getEngineID();
+                while(tmp.equals(this.get(pos).getEngineID()) && !tmp.startsWith("E")) {
+                    System.out.println("eengineID was been duplicated or need to start with E.");
+                    this.get(pos).setEngineID(menu.getString("Enter engineID: "));
+                }
             }
         }
         return yup;
@@ -199,43 +188,33 @@ public class CarList extends ArrayList<Car> {
     }
 
     public void addCar() {
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("List of the brand: ");
-        for (int i = 0; i < this.brandlist.size(); i++) {
-            System.out.println(this.brandlist.get(i));
-        }
-        System.out.print("Enter new carID: ");
-        String carID = sc.nextLine();
+        String id = menu.getString("Enter new id: ");
         for (int i = 0; i < this.size(); i++) {
-            while (this.get(i).getCarID().equals(carID)) {
-                System.out.print("carID must not be duplicated. Enter again: ");
-                carID = sc.nextLine();
+            while (this.get(i).getCarID().equals(id)) {
+                System.out.println("ID was been duplicated. Enter again: ");
+                id = menu.getString("Enter ID: ");
             }
         }
-        Menu menu = new Menu();
+        String color = menu.getStringWoSpace("Enter color: ");
         Brand b = (Brand) menu.ref_getChoice(brandlist);
-        System.out.print("Enter color: ");
-        String color = sc.nextLine();
-        while (color.contains(" ")) {
-            System.out.print("color must not be has space. Please enter and again: ");
-            color = sc.nextLine();
-        }
-        String frameID = sc.nextLine();
-        for (int i = 0; i < this.brandlist.size(); i++) {
-            while (frameID.startsWith("F") && !this.brandlist.get(i).equals(frameID)) {
-                System.out.print("frameID must be start with 'F' and must not have duplicated. Enter agian: ");
-                frameID = sc.nextLine();
-            }
-        }
-        String engineID = sc.nextLine();
+        String frameID = menu.getStringWoSpace("Enter frameID: ");
         for (int i = 0; i < this.size(); i++) {
-            while (!engineID.startsWith("F") && this.brandlist.get(i).equals(engineID)) {
-                System.out.print("frameID must be start with 'F' and must not have duplicated. Enter agian: ");
-                engineID = sc.nextLine();
+            String tmp = this.get(i).getFrameID();
+            while (tmp.equals(frameID) && !tmp.startsWith("F")) {
+                System.out.println("frameID was been duplicated or need to start with F. Enter again: ");
+                frameID = menu.getStringWoSpace("Enter frameID: ");
             }
         }
-        Car c = new Car(carID, b, color, frameID, engineID);
+        String engineID = menu.getStringWoSpace("Please enter engineID: ");
+        for (int i = 0; i < this.size(); i++) {
+            String tmp = this.get(i).getEngineID();
+            while (tmp.equals(engineID) && !tmp.startsWith("E")) {
+                System.out.println("engineID was been duplicated or need to start with E. Enter again:  ");
+                engineID = menu.getStringWoSpace("Please enter engineID: ");
+            }
+        }
+        Car c = new Car(id, b, color, frameID, engineID);
         this.add(c);
     }
 
