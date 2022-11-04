@@ -10,7 +10,12 @@ public class Menu<E> {
     public Menu() {
     }
 
+    public void clearBuffer() {
+        scanner = new Scanner(System.in);
+    }
+
     public int getInt() {
+        clearBuffer();
         int num;
         do {
             while (!scanner.hasNextInt()) {
@@ -22,7 +27,6 @@ public class Menu<E> {
                 System.out.println(num + " is smaller than 0. Please enter a number greater than 0");
             }
         } while (num < 0);
-
         return num;
     }
 
@@ -32,6 +36,7 @@ public class Menu<E> {
     }
 
     public double getDouble() {
+        clearBuffer();
         double num;
         do {
             while (!scanner.hasNextDouble()) {
@@ -43,7 +48,6 @@ public class Menu<E> {
                 System.out.println(num + " is smaller than 0. Please enter a number greater than 0");
             }
         } while (num < 0);
-
         return num;
     }
 
@@ -53,30 +57,33 @@ public class Menu<E> {
     }
 
     public String getString() {
+        clearBuffer();
         String out = scanner.nextLine();
         return out;
     }
-    
+
     public String getString(String message) {
         System.out.println(message);
         return getString();
     }
-    
+
     public String getStringWoSpace() {
+        clearBuffer();
         String out;
         do {
             out = scanner.nextLine();
-            if (out.contains(" "))
+            if (out.contains(" ")) {
                 System.out.println("String must not contain space. Please retype");
+            }
         } while (out.contains(" "));
         return out;
     }
-    
+
     public String getStringWoSpace(String message) {
         System.out.println(message);
         return getStringWoSpace();
     }
-    
+
     public int int_getChoice(ArrayList<E> options) {
         for (int i = 0; i < options.size(); i++) {
             System.out.println(i + " " + options.get(i));
