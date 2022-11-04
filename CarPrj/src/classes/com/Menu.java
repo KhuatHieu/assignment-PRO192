@@ -10,7 +10,7 @@ public class Menu<E> {
     public Menu() {
     }
 
-    public static int getInt() {
+    public int getInt() {
         Scanner scanner = new Scanner(System.in);
         int num;
         do {
@@ -27,12 +27,12 @@ public class Menu<E> {
         return num;
     }
 
-    public static int getInt(String message) {
+    public int getInt(String message) {
         System.out.println(message);
         return getInt();
     }
 
-    public static double getDouble() {
+    public double getDouble() {
         Scanner scanner = new Scanner(System.in);
         double num;
         do {
@@ -49,7 +49,7 @@ public class Menu<E> {
         return num;
     }
 
-    public static double getDouble(String message) {
+    public double getDouble(String message) {
         System.out.println(message);
         return getDouble();
     }
