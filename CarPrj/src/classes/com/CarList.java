@@ -150,20 +150,21 @@ public class CarList extends ArrayList<Car> {
         } else {            
             Brand b = (Brand) menu.ref_getChoice(brandlist);            
             System.out.println("Found and start changing: ");
-            this.get(pos).setColor(menu.getString("Enter Color: "));
-            this.get(pos).setFrameID(menu.getString("Enter frameID: "));
+            Car c =this.get(pos);
+            c.setColor(menu.getString("Enter Color: "));
+            c.setFrameID(menu.getString("Enter frameID: "));
             for (int i = 0; i < this.size(); i++) {
                 String tmp = this.get(i).getFrameID();
-                while(tmp.equals(this.get(pos).getFrameID()) && !tmp.startsWith("F")) {
+                while(tmp.equals(c.getFrameID()) && !tmp.startsWith("F")) {
                     System.out.println("frameID was been duplicated or need to start with F.");
-                    this.get(pos).setFrameID("Enter frameID: ");
+                    c.setFrameID("Enter frameID: ");
                 }
-            }this.get(pos).setEngineID(menu.getString("Enter EngineID: "));
+            }c.setEngineID(menu.getString("Enter EngineID: "));
             for (int i = 0; i < this.size(); i++) {
                 String tmp = this.get(i).getEngineID();
-                while(tmp.equals(this.get(pos).getEngineID()) && !tmp.startsWith("E")) {
+                while(tmp.equals(c.getEngineID()) && !tmp.startsWith("E")) {
                     System.out.println("eengineID was been duplicated or need to start with E.");
-                    this.get(pos).setEngineID(menu.getString("Enter engineID: "));
+                    c.setEngineID(menu.getString("Enter engineID: "));
                 }
             }
         }
@@ -219,6 +220,17 @@ public class CarList extends ArrayList<Car> {
     }
 
     public void printtBasedBrandName() {
-        System.out.println("Brand name of list: ");
+        int count = 0;
+        String name = menu.getString("Enter the string want to find: ");
+        for (int i = 0; i < this.size(); i++) {
+            Car c =this.get(i);
+            if(c.brand.getBrandName().matches(name)) {
+                count++;
+            }else {
+                count = count;
+            }
+        }if(count == 0) {
+            System.out.println("No car is detected!");
+        }
     }
 }
