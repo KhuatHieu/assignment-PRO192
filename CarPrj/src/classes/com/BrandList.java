@@ -21,8 +21,7 @@ public class BrandList extends ArrayList<Brand> {
             BufferedReader br = new BufferedReader(fr);
             String line;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
-                String data[] = line.split("[,: ]+");
+                String data[] = line.split(", |: ");
                 String brandId = data[0];
                 String brandName = data[1];
                 String soundBrand = data[2];
@@ -83,8 +82,12 @@ public class BrandList extends ArrayList<Brand> {
     }
 
     public void listBrands() {
-        for (Brand b : this) {
-            System.out.println(b);
+        if (this.isEmpty()) {
+            System.out.println("Nothing");
+        } else {
+            for (Brand b : this) {
+                System.out.println(b);
+            }
         }
     }
 
@@ -97,6 +100,7 @@ public class BrandList extends ArrayList<Brand> {
             this.get(pos).setBrandName(menu.getString("Enter new brand name: "));
             this.get(pos).setSoundBrand(menu.getString("Enter new sound brand: "));
             this.get(pos).setPrice(menu.getDouble("Enter new price: "));
+            System.out.println("Update completed!");
         }
     }
 }

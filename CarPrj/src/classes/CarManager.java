@@ -41,14 +41,14 @@ public class CarManager {
         if (brandList.loadFromFile(brandsPath))
             System.out.println("Loaded brands database successfully");
         else {
-            System.out.println("Error load brands database! Exiting");
+            System.out.println("Cannot load brands database! Exiting");
             System.exit(0);
         }
         
         if (carList.loadFromFile(carsPath))
             System.out.println("Loaded cars database successfully");
         else {
-            System.out.println("Error load cars database! Exiting");
+            System.out.println("Cannot load cars database! Exiting");
             System.exit(0);
         }
         
