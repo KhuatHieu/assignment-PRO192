@@ -161,20 +161,26 @@ public class CarList extends ArrayList<Car> {
         String color = menu.getStringWoSpace("Enter color: ");
         Brand b = (Brand) menu.ref_getChoice(brandlist);
         String frameID = menu.getStringWoSpace("Enter frame ID: ");
-        for (int i = 0; i < this.size(); i++) {
-            String tmp = this.get(i).getFrameID();
-            while (tmp.equals(frameID) && !tmp.startsWith("F")) {
-                System.out.println("This frame ID has been duplicated or need to start with F. Enter again: ");
+        for (Car c : this) {
+            String tmp = c.getFrameID();
+            while (tmp.equals(frameID)) {
+                System.out.println("This frame ID has been duplicated. Enter again: ");
                 frameID = menu.getStringWoSpace("Enter frame ID: ");
             }
+        }while(!frameID.startsWith("F")) {
+                System.out.println("need to start with F. Enter again: ");
+                frameID = menu.getStringWoSpace("Enter frame ID: ");
         }
         String engineID = menu.getStringWoSpace("Please enter engine ID: ");
         for (Car car : this) {
             String tmp = car.getEngineID();
-            while (tmp.equals(engineID) && !tmp.startsWith("E")) {
-                System.out.println("This engine ID has been duplicated or need to start with E. Enter again:  ");
+            while (tmp.equals(engineID)) {
+                System.out.println("This engine ID has been duplicated. Enter again:  ");
                 engineID = menu.getStringWoSpace("Please enter engine ID: ");
             }
+        }while(!engineID.startsWith("E")) {
+            System.out.println("need to start with E. Enter again: ");
+            engineID = menu.getStringWoSpace("Please enter engine ID: ");
         }
         this.add(new Car(id, b, color, frameID, engineID));
     }
