@@ -1,4 +1,6 @@
 build/
+src/Brands.txt
+src/Cars.txt
 nbproject/
 build.xml
 manifest.mf

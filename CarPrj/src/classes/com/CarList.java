@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.StringTokenizer;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CarList extends ArrayList<Car> {
 
@@ -118,17 +119,26 @@ public class CarList extends ArrayList<Car> {
             c.setFrameID(menu.getString("Enter frame ID: "));
             for (Car car : this) {
                 String tmp = car.getFrameID();
-                while (tmp.equals(c.getFrameID()) || !tmp.startsWith("F")) {
-                    c.setFrameID("This frame ID has been duplicated or need to start with F\nEnter new frame ID: ");
+                while (tmp.equals(c.getFrameID())) {
+                    System.out.println("This frameID has been duplicated.");
+                    c.setFrameID(menu.getString("Enter new FrameID: "));
                 }
+            }
+            while (!this.get(pos).getFrameID().startsWith("F")) {
+                System.out.println("This frameID need to start with F.");
+                c.setFrameID(menu.getString("Enter new FrameID: "));
             }
             c.setEngineID(menu.getString("Enter new engine ID: "));
             for (Car car : this) {
                 String tmp = car.getEngineID();
-                while (tmp.equals(c.getEngineID()) || !tmp.startsWith("E")) {
-                    System.out.println("This engine ID has been duplicated or need to start with E");
+                while (tmp.equals(c.getEngineID())) {
+                    System.out.println("This engine ID has been duplicated.");
                     c.setEngineID(menu.getString("Enter new engine ID: "));
                 }
+            }
+            while (!this.get(pos).getEngineID().startsWith("E")) {
+                System.out.println("This engine ID need to start with E");
+                c.setEngineID(menu.getString("Enter new engine ID: "));
             }
         }
         return updated;
@@ -218,4 +228,4 @@ public class CarList extends ArrayList<Car> {
             System.out.println("No car is detected!");
         }
     }
-}
+
