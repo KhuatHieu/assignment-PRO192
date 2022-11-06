@@ -15,16 +15,28 @@ public class Menu<E> {
     }
 
     public boolean isEmpty(String input) {
-        return input.equals("");
+        if (input.equals("")) {
+            clearBuffer();
+            System.out.println("This field must not be empty! Please retype");
+            return true;
+        }
+        return false;
     }
 
     public boolean isContainSpace(String input) {
-        return input.contains(" ");
+        if (input.contains(" ")) {
+            clearBuffer();
+            System.out.println("Must not contains space! Please retype");
+            return true;
+        }
+        return false;
     }
 
     public boolean isInt(String input) {
         for (char c : input.toCharArray()) {
             if (!Character.isDigit(c)) {
+                clearBuffer();
+                System.out.println(input + " is not a number! Please retype");
                 return false;
             }
         }
@@ -33,9 +45,12 @@ public class Menu<E> {
 
     public boolean isDouble(String input) {
         for (char c : input.toCharArray()) {
-            if (c == '.')
+            if (c == '.') {
                 continue;
+            }
             if (!Character.isDigit(c)) {
+                clearBuffer();
+                System.out.println(input + " is not a number! Please retype");
                 return false;
             }
         }
@@ -48,13 +63,6 @@ public class Menu<E> {
         String num;
         do {
             num = scanner.nextLine();
-            if (isEmpty(num)) {
-                System.out.println("This field must not be empty! Please retype");
-            } else if (isContainSpace(num)) {
-                System.out.println("Must not contains space! Please retype");
-            } else if (!isInt(num)) {
-                System.out.println(num + " is not a number! Please retype");
-            }
         } while (isEmpty(num) || isContainSpace(num) || !isInt(num));
         return Integer.parseInt(num);
     }
@@ -70,13 +78,6 @@ public class Menu<E> {
         String num;
         do {
             num = scanner.nextLine();
-            if (isEmpty(num)) {
-                System.out.println("This field must not be empty! Please retype");
-            } else if (isContainSpace(num)) {
-                System.out.println("Must not contains space! Please retype");
-            } else if (!isDouble(num)) {
-                System.out.println(num + " is not a number! Please retype");
-            }
         } while (isEmpty(num) || isContainSpace(num) || !isDouble(num));
         return Double.parseDouble(num);
     }
@@ -89,12 +90,9 @@ public class Menu<E> {
     public String getString() {
         clearBuffer();
         String out;
-        
+
         do {
             out = scanner.nextLine();
-            if (isEmpty(out)) {
-                System.out.println("This field must not be blank! Please retype");
-            }
         } while (isEmpty(out));
 
         return out;
@@ -110,12 +108,6 @@ public class Menu<E> {
         String out;
         do {
             out = scanner.nextLine();
-            if (isEmpty(out)) {
-                System.out.println("This field must not be blank! Please retype");
-            }
-            else if (isContainSpace(out)) {
-                System.out.println("Must not contains space! Please retype");
-            }
         } while (isEmpty(out) || isContainSpace(out));
         return out;
     }
