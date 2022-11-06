@@ -36,7 +36,7 @@ public class Menu<E> {
         for (char c : input.toCharArray()) {
             if (!Character.isDigit(c)) {
                 clearBuffer();
-                System.out.println(input + " is not a number! Please retype");
+                System.out.println(input + " is not a number or is a negative number! Please retype");
                 return false;
             }
         }
@@ -50,7 +50,7 @@ public class Menu<E> {
             }
             if (!Character.isDigit(c)) {
                 clearBuffer();
-                System.out.println(input + " is not a number! Please retype");
+                System.out.println(input + " is not a numberor is a negative number! Please retype");
                 return false;
             }
         }
