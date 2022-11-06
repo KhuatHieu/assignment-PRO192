@@ -17,10 +17,6 @@ public class Car implements Comparable<Car> {
         this.engineID = engineID;
     }
 
-  
-
-    
-
     public String getCarID() {
         return carID;
     }
