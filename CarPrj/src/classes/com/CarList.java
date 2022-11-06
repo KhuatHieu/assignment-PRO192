@@ -104,44 +104,67 @@ public class CarList extends ArrayList<Car> {
         return found;
     }
 
-    public boolean updateCar() {
-        boolean updated = false;
-        String updateID = menu.getStringWoSpace("Enter car ID ");
-        int pos = searchID(updateID);
-        if (pos < 0) {
-            System.out.print("Not found!");
-            updated = false;
-        } else {
-            Brand b = (Brand) menu.ref_getChoice(brandlist);
-            System.out.println("Found and start updating");
-            Car c = this.get(pos);
-            c.setColor(menu.getString("Enter color: "));
-            c.setFrameID(menu.getString("Enter frame ID: "));
-            for (Car car : this) {
-                String tmp = car.getFrameID();
-                while (tmp.equals(c.getFrameID())) {
-                    System.out.println("This frameID has been duplicated.");
-                    c.setFrameID(menu.getString("Enter new FrameID: "));
-                }
+    public boolean isExisted(String input, String check) {
+        String temp = "";
+        for (Car car : this) {
+            switch (check) {
+                case "carId":
+                    temp = car.getCarID();
+                    break;
+                case "frameId":
+                    temp = car.getFrameID();
+                    break;
+                case "engineId":
+                    temp = car.getEngineID();
+                    break;
+                default:
+                    break;
             }
-            while (!this.get(pos).getFrameID().startsWith("F")) {
-                System.out.println("This frameID need to start with F.");
-                c.setFrameID(menu.getString("Enter new FrameID: "));
-            }
-            c.setEngineID(menu.getString("Enter new engine ID: "));
-            for (Car car : this) {
-                String tmp = car.getEngineID();
-                while (tmp.equals(c.getEngineID())) {
-                    System.out.println("This engine ID has been duplicated.");
-                    c.setEngineID(menu.getString("Enter new engine ID: "));
-                }
-            }
-            while (!this.get(pos).getEngineID().startsWith("E")) {
-                System.out.println("This engine ID need to start with E");
-                c.setEngineID(menu.getString("Enter new engine ID: "));
+
+            if (input.equals(temp)) {
+                System.out.println(temp + " already existed in database!");
+                return true;
             }
         }
-        return updated;
+        return false;
+    }
+
+    public boolean isStartsWith(String input, String ch) {
+        if (input.startsWith(ch)) {
+            return true;
+        } else {
+            System.out.println("Must be started with " + ch);
+            return false;
+        }
+    }
+
+    public boolean updateCar() {
+        String updateID = menu.getStringWoSpace("Enter car ID ");
+        int pos = searchID(updateID);
+
+        if (pos < 0) {
+            return false;
+        }
+
+        System.out.println("Found and start updating");
+
+        Brand b = (Brand) menu.ref_getChoice(brandlist);
+        String frameId, engineId = "";
+
+        Car c = this.get(pos);
+        c.setColor(menu.getString("Enter color: "));
+
+        do {
+            frameId = menu.getString("Enter frame ID: ");
+        } while (isExisted(frameId, "frameId") || !isStartsWith(frameId, "F"));
+        c.setFrameID(frameId);
+
+        do {
+            engineId = menu.getStringWoSpace("Enter engine ID: ");
+        } while (isExisted(engineId, "engineId") || !isStartsWith(engineId, "E"));
+        c.setEngineID(engineId);
+
+        return true;
     }
 
     public void listCars() {
@@ -160,57 +183,23 @@ public class CarList extends ArrayList<Car> {
         }
     }
 
-    public boolean isExisted(String input, String check) {
-        String temp = "";
-        for (Car car : this) {
-            switch (check) {
-                case "carId":
-                    temp = car.getCarID();
-                    break;
-                case "frameId":
-                    temp = car.getFrameID();
-                    break;
-                case "engineId":
-                    temp = car.getEngineID();
-                    break;
-                default:
-                    break;
-            }
-            
-            if (input.equals(temp)) {
-                System.out.println("Existed!");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isStartsWith(String input, String ch) {
-        if (input.startsWith(ch))
-            return true;
-        else {
-            System.out.println("Must be started with " + ch);
-            return false;
-        }
-    }
-    
     public void addCar() {
         String carId, color, frameId, engineId = "";
 
         do {
             carId = menu.getString("Enter ID: ");
         } while (isExisted(carId, "carId"));
-        
+
         color = menu.getStringWoSpace("Enter color: ");
-        
+
         do {
             frameId = menu.getString("Enter frame ID: ");
         } while (isExisted(frameId, "frameId") || !isStartsWith(frameId, "F"));
-        
+
         do {
             engineId = menu.getStringWoSpace("Enter engine ID: ");
         } while (isExisted(engineId, "engineId") || !isStartsWith(engineId, "E"));
-        
+
         Brand b = (Brand) menu.ref_getChoice(brandlist);
         this.add(new Car(carId, b, color, frameId, engineId));
     }
