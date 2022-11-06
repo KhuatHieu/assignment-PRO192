@@ -22,12 +22,12 @@ public class CarList extends ArrayList<Car> {
     public Menu menu = new Menu();
 
     public boolean loadFromFile(String fileCars) {
-        boolean result;
+        boolean result = true;
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileCars));
             String line;
             while ((line = br.readLine()) != null) {
-                StringTokenizer stk = new StringTokenizer(line, ",");
+                StringTokenizer stk = new StringTokenizer(line, ", ");
                 String carID = stk.nextElement().toString();
                 String brandID = stk.nextElement().toString();
                 String color = stk.nextElement().toString();
