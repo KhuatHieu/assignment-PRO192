@@ -67,7 +67,10 @@ public class CarManager {
                     brandList.addBrand();
                     break;
                 case 3:
-                    brandList.searchID(menu.getStringWoSpace("Enter brand ID to search: "));
+                    int pos = brandList.searchID(menu.getStringWoSpace("Enter brand ID to search: "));
+                    System.out.println((pos == -1)
+                                    ? "Not found!"
+                                    : brandList.get(pos));
                     break;
                 case 4:
                     brandList.updateBrand();
