@@ -17,6 +17,10 @@ public class Car implements Comparable<Car> {
         this.engineID = engineID;
     }
 
+  
+
+    
+
     public String getCarID() {
         return carID;
     }
@@ -59,7 +63,7 @@ public class Car implements Comparable<Car> {
 
     @Override
     public String toString() {
-        return carID + ", " + brand + ", " + color + ", " + frameID + ", " + engineID;
+        return carID + ", " + brand.getBrandID() + ", " + color + ", " + frameID + ", " + engineID;
     }
 
     @Override
