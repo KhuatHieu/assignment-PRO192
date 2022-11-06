@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.StringTokenizer;
 
 import java.io.IOException;
-import java.util.List;
 
 public class CarList extends ArrayList<Car> {
 
@@ -61,7 +60,7 @@ public class CarList extends ArrayList<Car> {
         return result;
     }
 
-    public int searchID(String carID) {
+    public int searchId(String carID) {
         int index = -1;
         for (int i = 0; i < this.size(); i++) {
             if (this.get(i).getCarID().equals(carID)) {
@@ -71,20 +70,20 @@ public class CarList extends ArrayList<Car> {
         return index;
     }
 
-    public int searchFrame(String fId) {
+    public int searchFrame(String frameId) {
         int index = -1;
         for (int i = 0; i < this.size(); i++) {
-            if (this.get(i).getFrameID().equals(fId)) {
+            if (this.get(i).getFrameID().equals(frameId)) {
                 index = i;
             }
         }
         return index;
     }
 
-    public int searchEngine(String eId) {
+    public int searchEngine(String engineId) {
         int index = -1;
         for (int i = 0; i < this.size(); i++) {
-            if (this.get(i).getEngineID().equals(eId)) {
+            if (this.get(i).getEngineID().equals(engineId)) {
                 index = i;
             }
         }
@@ -92,29 +91,27 @@ public class CarList extends ArrayList<Car> {
     }
 
     public boolean removeCar() {
-        boolean found = false;
         String idRemove = menu.getString("Enter ID you want to remove: ");
-        int pos = searchID(idRemove);
+        int pos = searchId(idRemove);
         if (pos < 0) {
-            System.out.print("Not found!");
+            return false;
         } else {
             this.remove(pos);
-            found = true;
+            return true;
         }
-        return found;
     }
 
     public boolean isExisted(String input, String check) {
         String temp = "";
         for (Car car : this) {
-            switch (check) {
-                case "carId":
+            switch (check.toLowerCase()) {
+                case "carid":
                     temp = car.getCarID();
                     break;
-                case "frameId":
+                case "frameid":
                     temp = car.getFrameID();
                     break;
-                case "engineId":
+                case "engineid":
                     temp = car.getEngineID();
                     break;
                 default:
@@ -122,46 +119,56 @@ public class CarList extends ArrayList<Car> {
             }
 
             if (input.equals(temp)) {
-                System.out.println(temp + " already existed in database!");
+                System.out.println(temp + " already existed in database! Please retype");
                 return true;
             }
         }
         return false;
     }
 
-    public boolean isStartsWith(String input, String ch) {
-        if (input.startsWith(ch)) {
-            return true;
-        } else {
-            System.out.println("Must be started with " + ch);
+    public boolean isInPattern(String input, String ch) {
+        if (!input.startsWith(ch)) {
+            System.out.println("Must be started with " + ch + "! Please retype");
             return false;
         }
+
+        char tmp[] = input.toCharArray();
+        for (int i = 1; i < input.length(); i++) {
+            if (!Character.isDigit(tmp[i]) || input.length() != 6) {
+                System.out.println("Must be in " + ch + "00000 format! Please retype");
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public boolean updateCar() {
-        String updateID = menu.getStringWoSpace("Enter car ID ");
-        int pos = searchID(updateID);
+        String updateId = menu.getStringWoSpace("Enter car ID ");
+        int pos = searchId(updateId);
 
         if (pos < 0) {
             return false;
         }
-
+        Car c = this.get(pos);
         System.out.println("Found and start updating");
 
+        System.out.println("Enter new brand index: ");
         Brand b = (Brand) menu.ref_getChoice(brandlist);
+        c.setBrand(b);
+        
         String frameId, engineId = "";
-
-        Car c = this.get(pos);
-        c.setColor(menu.getString("Enter color: "));
+        
+        c.setColor(menu.getString("Enter new color: "));
 
         do {
-            frameId = menu.getString("Enter frame ID: ");
-        } while (isExisted(frameId, "frameId") || !isStartsWith(frameId, "F"));
+            frameId = menu.getString("Enter new frame ID: ");
+        } while (isExisted(frameId, "frameId") || !isInPattern(frameId, "F"));
         c.setFrameID(frameId);
 
         do {
-            engineId = menu.getStringWoSpace("Enter engine ID: ");
-        } while (isExisted(engineId, "engineId") || !isStartsWith(engineId, "E"));
+            engineId = menu.getStringWoSpace("Enter new engine ID: ");
+        } while (isExisted(engineId, "engineId") || !isInPattern(engineId, "E"));
         c.setEngineID(engineId);
 
         return true;
@@ -178,6 +185,7 @@ public class CarList extends ArrayList<Car> {
                 }
             }
         });
+        
         for (Car c : this) {
             System.out.println(c.screnString());
         }
@@ -190,17 +198,19 @@ public class CarList extends ArrayList<Car> {
             carId = menu.getString("Enter ID: ");
         } while (isExisted(carId, "carId"));
 
+        System.out.println("Enter brand index: ");
+        Brand b = (Brand) menu.ref_getChoice(brandlist);
+        
         color = menu.getStringWoSpace("Enter color: ");
 
         do {
             frameId = menu.getString("Enter frame ID: ");
-        } while (isExisted(frameId, "frameId") || !isStartsWith(frameId, "F"));
+        } while (isExisted(frameId, "frameId") || !isInPattern(frameId, "F"));
 
         do {
             engineId = menu.getStringWoSpace("Enter engine ID: ");
-        } while (isExisted(engineId, "engineId") || !isStartsWith(engineId, "E"));
-
-        Brand b = (Brand) menu.ref_getChoice(brandlist);
+        } while (isExisted(engineId, "engineId") || !isInPattern(engineId, "E"));
+        
         this.add(new Car(carId, b, color, frameId, engineId));
     }
 
@@ -214,7 +224,7 @@ public class CarList extends ArrayList<Car> {
             }
         }
         if (count == 0) {
-            System.out.println("No car is detected!");
+            System.out.println("No car detected!");
         }
     }
 }
