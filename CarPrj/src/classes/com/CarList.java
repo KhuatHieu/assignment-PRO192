@@ -228,4 +228,4 @@ public class CarList extends ArrayList<Car> {
             System.out.println("No car is detected!");
         }
     }
-
+}
