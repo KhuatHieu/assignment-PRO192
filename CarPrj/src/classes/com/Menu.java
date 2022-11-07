@@ -50,7 +50,7 @@ public class Menu<E> {
             }
             if (!Character.isDigit(c)) {
                 clearBuffer();
-                System.out.println(input + " is not a numberor is a negative number! Please retype");
+                System.out.println(input + " is not a number or is a negative number! Please retype");
                 return false;
             }
         }
@@ -121,7 +121,7 @@ public class Menu<E> {
         for (int i = 0; i < options.size(); i++) {
             System.out.println(i + " " + options.get(i));
         }
-        int response = scanner.nextInt();
+        int response = getInt();
         return response;
     }
 
@@ -130,7 +130,6 @@ public class Menu<E> {
         do {
             response = int_getChoice(options);
         } while (response < 0 || response > options.size());
-        return options.get(response - 1);
+        return options.get(response);
     }
-
 }
