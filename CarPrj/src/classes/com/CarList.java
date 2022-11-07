@@ -218,7 +218,7 @@ public class CarList extends ArrayList<Car> {
         String name = menu.getString("Enter brand name you want to find: ");
         for (Car c : this) {
             if (c.getBrand().getBrandName().toLowerCase().contains(name.toLowerCase())) {
-                System.out.println(c);
+                System.out.println(c + " [" + c.getBrand().getBrandName() + "]");
                 count++;
             }
         }
