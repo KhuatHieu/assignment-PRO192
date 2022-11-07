@@ -37,21 +37,25 @@ public class CarManager {
 
         String brandsPath = srcPath + "\\Brands.txt";
         String carsPath = srcPath + "\\Cars.txt";
-        
-        if (brandList.loadFromFile(brandsPath))
+
+        if (brandList.loadFromFile(brandsPath)) {
             System.out.println("Loaded brands database successfully");
-        else {
-            System.out.println("Cannot load brands database! Exiting");
+        } else {
+            System.out.println("Cannot load brands database!\n"
+                    + "Please provide a Brands.txt file at " + srcPath
+                    + "\nExiting");
             System.exit(0);
         }
-        
-        if (carList.loadFromFile(carsPath))
+
+        if (carList.loadFromFile(carsPath)) {
             System.out.println("Loaded cars database successfully");
-        else {
-            System.out.println("Cannot load cars database! Exiting");
+        } else {
+            System.out.println("Cannot load cars database!\n"
+                    + "Please provide a Cars.txt file at " + srcPath
+                    + "\nExiting");
             System.exit(0);
         }
-        
+
         int choice;
         Menu menu = new Menu();
         do {
@@ -69,8 +73,8 @@ public class CarManager {
                 case 3:
                     int pos = brandList.searchID(menu.getStringWoSpace("Enter brand ID to search: "));
                     System.out.println((pos == -1)
-                                    ? "Not found!"
-                                    : brandList.get(pos));
+                            ? "Not found!"
+                            : brandList.get(pos));
                     break;
                 case 4:
                     brandList.updateBrand();
@@ -116,6 +120,6 @@ public class CarManager {
                     System.out.println("Enter option again");
                     break;
             }
-        } while (choice >= 0 && choice < options.size());
+        } while (choice >= 0); // && choice < options.size()
     }
 }
