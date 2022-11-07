@@ -102,7 +102,7 @@ public class CarManager {
                     if (carList.updateCar()) {
                         System.out.println("Updated successfully!");
                     } else {
-                        System.out.println("Update failed!");
+                        System.out.println("Not found!");
                     }
                     break;
                 case 11:

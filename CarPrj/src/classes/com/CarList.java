@@ -101,10 +101,10 @@ public class CarList extends ArrayList<Car> {
         }
     }
 
-    public boolean isExisted(String input, String check) {
+    public boolean isExisted(String input, String mode) {
         String temp = "";
         for (Car car : this) {
-            switch (check.toLowerCase()) {
+            switch (mode.toLowerCase()) {
                 case "carid":
                     temp = car.getCarID();
                     break;
@@ -151,7 +151,6 @@ public class CarList extends ArrayList<Car> {
             return false;
         }
         Car c = this.get(pos);
-        System.out.println("Found and start updating");
 
         System.out.println("Enter new brand index: ");
         Brand b = (Brand) menu.ref_getChoice(brandlist);
@@ -218,13 +217,13 @@ public class CarList extends ArrayList<Car> {
         int count = 0;
         String name = menu.getString("Enter brand name you want to find: ");
         for (Car c : this) {
-            if (c.brand.getBrandName().matches(name)) {
+            if (c.getBrand().getBrandName().toLowerCase().contains(name.toLowerCase())) {
                 System.out.println(c);
                 count++;
             }
         }
         if (count == 0) {
-            System.out.println("No car detected!");
+            System.out.println("Not found any car with this brand name!");
         }
     }
 }
