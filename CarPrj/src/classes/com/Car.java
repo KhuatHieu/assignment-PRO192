@@ -79,5 +79,4 @@ public class Car implements Comparable<Car> {
     public String toString(String brandID) {
         return carID + ", " + brand.getBrandID() + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
     }
-
 }

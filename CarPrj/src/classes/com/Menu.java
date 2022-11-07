@@ -129,7 +129,7 @@ public class Menu<E> {
         int response;
         do {
             response = int_getChoice(options);
-        } while (response < 0 || response > options.size());
+        } while (response < 0 || response >= options.size());
         return options.get(response);
     }
 }
