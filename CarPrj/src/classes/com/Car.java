@@ -73,7 +73,7 @@ public class Car implements Comparable<Car> {
     }
 
     public String screnString() {
-        return "["+ brand.getBrandName() + "] " + getCarID() + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
+        return "["+ brand.getBrandID() + " - "+ brand.getBrandName() + "] " + getCarID() + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
     }
 
     public String toString(String brandID) {
