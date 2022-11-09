@@ -44,18 +44,16 @@ public class CarList extends ArrayList<Car> {
     }
 
     public boolean saveToFile(String fileCars) {
-        boolean result;
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(fileCars));
             for (Car c : this) {
                 bw.write(c.toString() + "\n");
             }
             bw.close();
-            result = true;
         } catch (IOException e) {
-            result = false;
+            return false;
         }
-        return result;
+        return true;
     }
 
     public int searchId(String carID) {
