@@ -15,9 +15,9 @@ public class Menu<E> {
     }
 
     public boolean isEmpty(String input) {
-        if (input.equals("")) {
+        if (input.isEmpty()) {
             clearBuffer();
-            System.out.println("This field must not be empty! Please retype");
+            System.out.println("This field must not empty! Please retype");
             return true;
         }
         return false;
@@ -26,34 +26,39 @@ public class Menu<E> {
     public boolean isContainSpace(String input) {
         if (input.contains(" ")) {
             clearBuffer();
-            System.out.println("Must not contains space! Please retype");
+            System.out.println("This field must not contains space! Please retype");
             return true;
         }
         return false;
     }
 
-    public boolean isInt(String input) {
-        for (char c : input.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                clearBuffer();
-                System.out.println(input + " is not a number or is a negative number! Please retype");
-                return false;
-            }
+    public boolean isPositive(double num) {
+        if (num < 0) {
+            System.out.println("That number is < 0! Please enter a number that bigger than 0");
+            return false;
         }
+        return true;
+    }
+    
+    public boolean isInt(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println(input + " is not a number! Please retype");
+            return false;
+        }
+
         return true;
     }
 
     public boolean isDouble(String input) {
-        for (char c : input.toCharArray()) {
-            if (c == '.') {
-                continue;
-            }
-            if (!Character.isDigit(c)) {
-                clearBuffer();
-                System.out.println(input + " is not a number or is a negative number! Please retype");
-                return false;
-            }
+        try {
+            Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            System.out.println(input + " is not a number! Please retype");
+            return false;
         }
+        
         return true;
     }
 
@@ -63,7 +68,7 @@ public class Menu<E> {
         String num;
         do {
             num = scanner.nextLine();
-        } while (isEmpty(num) || isContainSpace(num) || !isInt(num));
+        } while (isEmpty(num) || isContainSpace(num) || !isInt(num) || !isPositive(Integer.parseInt(num)));
         return Integer.parseInt(num);
     }
 
@@ -78,7 +83,7 @@ public class Menu<E> {
         String num;
         do {
             num = scanner.nextLine();
-        } while (isEmpty(num) || isContainSpace(num) || !isDouble(num));
+        } while (isEmpty(num) || isContainSpace(num) || !isDouble(num) || !isPositive(Double.parseDouble(num)));
         return Double.parseDouble(num);
     }
 
