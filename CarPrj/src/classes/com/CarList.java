@@ -7,7 +7,6 @@ import java.io.BufferedWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.StringTokenizer;
 
 import java.io.IOException;
 
@@ -22,27 +21,26 @@ public class CarList extends ArrayList<Car> {
     public Menu menu = new Menu();
 
     public boolean loadFromFile(String fileCars) {
-        boolean result = true;
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileCars));
             String line;
             while ((line = br.readLine()) != null) {
-                StringTokenizer stk = new StringTokenizer(line, ", ");
-                String carID = stk.nextElement().toString();
-                String brandID = stk.nextElement().toString();
-                String color = stk.nextElement().toString();
-                String frameID = stk.nextElement().toString();
-                String engineID = stk.nextElement().toString();
+                String data[] = line.split(", ");
+                String carID = data[0];
+                String brandID = data[1];
+                String color = data[2];
+                String frameID = data[3];
+                String engineID = data[4];
                 int pos = brandlist.searchID(brandID);
                 Brand b = brandlist.get(pos);
                 this.add(new Car(carID, b, color, frameID, engineID));
             }
             br.close();
-            result = true;
         } catch (IOException e) {
-            result = false;
+            return false;
         }
-        return result;
+        
+        return true;
     }
 
     public boolean saveToFile(String fileCars) {
