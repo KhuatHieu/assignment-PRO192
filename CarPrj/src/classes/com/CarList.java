@@ -21,25 +21,31 @@ public class CarList extends ArrayList<Car> {
     public Menu menu = new Menu();
 
     public boolean loadFromFile(String fileCars) {
+        String line = null;
         try {
-            BufferedReader br = new BufferedReader(new FileReader(fileCars));
-            String line;
-            while ((line = br.readLine()) != null) {
-                String data[] = line.split(", ");
-                String carID = data[0];
-                String brandID = data[1];
-                String color = data[2];
-                String frameID = data[3];
-                String engineID = data[4];
-                int pos = brandlist.searchID(brandID);
-                Brand b = brandlist.get(pos);
-                this.add(new Car(carID, b, color, frameID, engineID));
+            try (BufferedReader br = new BufferedReader(new FileReader(fileCars))) {
+                while ((line = br.readLine()) != null) {
+                    String data[] = line.split(", ");
+                    String carID = data[0];
+                    String brandID = data[1];
+                    String color = data[2];
+                    String frameID = data[3];
+                    String engineID = data[4];
+                    int pos = brandlist.searchID(brandID);
+                    Brand b = brandlist.get(pos);
+                    this.add(new Car(carID, b, color, frameID, engineID));
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("File Cars.txt corrupted!"
+                        + "\nat: -> " + line
+                        + "\nForced exit");
+                System.exit(-1);
+                return false;
             }
-            br.close();
         } catch (IOException e) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -57,33 +63,30 @@ public class CarList extends ArrayList<Car> {
     }
 
     public int searchId(String carID) {
-        int index = -1;
         for (int i = 0; i < this.size(); i++) {
             if (this.get(i).getCarID().equals(carID)) {
-                index = i;
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 
     public int searchFrame(String frameId) {
-        int index = -1;
         for (int i = 0; i < this.size(); i++) {
             if (this.get(i).getFrameID().equals(frameId)) {
-                index = i;
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 
     public int searchEngine(String engineId) {
-        int index = -1;
         for (int i = 0; i < this.size(); i++) {
             if (this.get(i).getEngineID().equals(engineId)) {
-                index = i;
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 
     public boolean removeCar() {
@@ -151,9 +154,9 @@ public class CarList extends ArrayList<Car> {
         System.out.println("Enter new brand index: ");
         Brand b = (Brand) menu.ref_getChoice(brandlist);
         c.setBrand(b);
-        
+
         String frameId, engineId = "";
-        
+
         c.setColor(menu.getString("Enter new color: "));
 
         do {
@@ -180,9 +183,9 @@ public class CarList extends ArrayList<Car> {
                 }
             }
         });
-        
+
         for (Car c : this) {
-            System.out.println(c.screnString());
+            System.out.println(c.screenString());
         }
     }
 
@@ -195,7 +198,7 @@ public class CarList extends ArrayList<Car> {
 
         System.out.println("Enter brand index: ");
         Brand b = (Brand) menu.ref_getChoice(brandlist);
-        
+
         color = menu.getStringWoSpace("Enter color: ");
 
         do {
@@ -205,7 +208,7 @@ public class CarList extends ArrayList<Car> {
         do {
             engineId = menu.getStringWoSpace("Enter engine ID: ");
         } while (isExisted(engineId, "engineId") || !isInPattern(engineId, "E"));
-        
+
         this.add(new Car(carId, b, color, frameId, engineId));
     }
 

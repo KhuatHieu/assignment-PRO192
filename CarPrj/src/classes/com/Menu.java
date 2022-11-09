@@ -17,7 +17,7 @@ public class Menu<E> {
     public boolean isEmpty(String input) {
         if (input.isEmpty()) {
             clearBuffer();
-            System.out.println("This field must not empty! Please retype");
+            System.out.println("This field must not be empty! Please retype");
             return true;
         }
         return false;
@@ -34,7 +34,7 @@ public class Menu<E> {
 
     public boolean isPositive(double num) {
         if (num < 0) {
-            System.out.println("That number is < 0! Please enter a number that bigger than 0");
+            System.out.println("That number is < 0! Please enter a number bigger than 0");
             return false;
         }
         return true;

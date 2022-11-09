@@ -1,6 +1,6 @@
 package classes.com;
 
-public class Car implements Comparable<Car> {
+public class Car {
 
     public String carID;
     public Brand brand;
@@ -57,26 +57,12 @@ public class Car implements Comparable<Car> {
         this.engineID = engineID;
     }
 
+    public String screenString() {
+        return "[" + brand.getBrandID() + " - " + brand.getBrandName() + "] " + getCarID() + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
+    }
+
     @Override
     public String toString() {
         return carID + ", " + brand.getBrandID() + ", " + color + ", " + frameID + ", " + engineID;
-    }
-
-    @Override
-    public int compareTo(Car o) {
-        int d = this.brand.getBrandName().compareTo(o.brand.getBrandName());
-        if (d != 0) {
-            return d;
-        } else {
-            return this.carID.compareTo(o.carID);
-        }
-    }
-
-    public String screnString() {
-        return "["+ brand.getBrandID() + " - "+ brand.getBrandName() + "] " + getCarID() + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
-    }
-
-    public String toString(String brandID) {
-        return carID + ", " + brand.getBrandID() + ", " + getColor() + ", " + getFrameID() + ", " + getEngineID();
     }
 }

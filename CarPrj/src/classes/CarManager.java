@@ -3,17 +3,23 @@ package classes;
 import classes.com.*;
 
 import java.util.ArrayList;
+import java.io.File;
 import java.nio.file.Paths;
-import java.util.Scanner;
+
+import java.io.IOException;
 
 public class CarManager {
 
     public static String projectPath = Paths.get("").toAbsolutePath().toString();
     public static String srcPath = projectPath + "\\src";
 
-    public static ArrayList<String> options = new ArrayList<>();
+    public static BrandList brandList = new BrandList();
+    public static CarList carList = new CarList(brandList);
 
-    public static Scanner scanner = new Scanner(System.in);
+    public static String brandsPath = srcPath + "\\Brands.txt";
+    public static String carsPath = srcPath + "\\Cars.txt";
+
+    public static ArrayList<String> options = new ArrayList<>();
 
     public static void addOptions() {
         options.add("Exit");
@@ -30,40 +36,38 @@ public class CarManager {
         options.add("Save cars to file");
     }
 
-    public static void main(String[] args) {
-        addOptions();
-        BrandList brandList = new BrandList();
-        CarList carList = new CarList(brandList);
-
-        String brandsPath = srcPath + "\\Brands.txt";
-        String carsPath = srcPath + "\\Cars.txt";
-
+    public static void checkValidFiles() throws IOException {
         if (brandList.loadFromFile(brandsPath)) {
-            System.out.println("Loaded brands database successfully");
+            System.out.println("Loaded brands successfully");
         } else {
-            System.out.println("Cannot load brands database!\n"
-                    + "Please provide a Brands.txt file at " + srcPath
-                    + "\nExiting");
-            System.exit(0);
+            File brandsFile = new File(brandsPath);
+            brandsFile.createNewFile();
+            System.out.println("Brands file not found. Automatically created Brands.txt at " + srcPath);
         }
 
         if (carList.loadFromFile(carsPath)) {
-            System.out.println("Loaded cars database successfully");
+            System.out.println("Loaded cars successfully");
         } else {
-            System.out.println("Cannot load cars database!\n"
-                    + "Please provide a Cars.txt file at " + srcPath
-                    + "\nExiting");
-            System.exit(0);
+            File carsFile = new File(carsPath);
+            carsFile.createNewFile();
+            System.out.println("Cars file not found. Automatically created Cars.txt at " + srcPath);
         }
+    }
 
-        int choice;
+    public static void main(String[] args) throws IOException {
+        addOptions();
+
+        checkValidFiles();
+        
+        boolean choosing = true;
         Menu menu = new Menu();
         do {
             System.out.println("==================================");
-            choice = menu.int_getChoice(options);
+            int choice = menu.int_getChoice(options);
             switch (choice) {
-                case 0:
-                    return;
+                case 0: // exit
+                    choosing = false;
+                    break;
                 case 1:
                     brandList.listBrands();
                     break;
@@ -80,11 +84,9 @@ public class CarManager {
                     brandList.updateBrand();
                     break;
                 case 5:
-                    if (brandList.saveToFile(brandsPath)) {
-                        System.out.println("Saved successfully!");
-                    } else {
-                        System.out.println("Save failed!");
-                    }
+                    System.out.println((brandList.saveToFile(brandsPath))
+                            ? "Saved successfully"
+                            : "Save failed!");
                     break;
                 case 6:
                     carList.listCars();
@@ -96,30 +98,24 @@ public class CarManager {
                     carList.addCar();
                     break;
                 case 9:
-                    if (carList.removeCar()) {
-                        System.out.println("Removed successfully!");
-                    } else {
-                        System.out.println("Remove failed!");
-                    }
+                    System.out.println(carList.removeCar()
+                            ? "Removed successfully!"
+                            : "Remove failed!");
                     break;
                 case 10:
-                    if (carList.updateCar()) {
-                        System.out.println("Updated successfully!");
-                    } else {
-                        System.out.println("Not found!");
-                    }
+                    System.out.println(carList.updateCar()
+                            ? "Updated successfully!"
+                            : "Not found!");
                     break;
                 case 11:
-                    if (carList.saveToFile(carsPath)) {
-                        System.out.println("Saved successfully!");
-                    } else {
-                        System.out.println("Save failed!");
-                    }
+                    System.out.println(carList.saveToFile(carsPath)
+                            ? "Saved successfully!"
+                            : "Save failed!");
                     break;
                 default:
-                    System.out.println("Enter option again");
+                    System.out.println("Choice must be from 0 to " + (options.size() - 1) + ". Please retype");
                     break;
             }
-        } while (choice >= 0); // && choice < options.size()
+        } while (choosing == true);
     }
 }
